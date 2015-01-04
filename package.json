@@ -1,0 +1,27 @@
+{
+  "name": "nassty",
+  "version": "1.0.0",
+  "description": "Node-hosted implementation of Sass",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab -ct 100"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smikes/nassty.git"
+  },
+  "keywords": [
+    "sass",
+    "css"
+  ],
+  "author": "Sam Mikes <smikes@cubane.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smikes/nassty/issues"
+  },
+  "homepage": "https://github.com/smikes/nassty",
+  "devDependencies": {
+    "code": "^1.2.1",
+    "lab": "^5.1.1"
+  }
+}
