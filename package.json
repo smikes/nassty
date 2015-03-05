@@ -4,7 +4,8 @@
   "description": "Node-hosted implementation of Sass",
   "main": "index.js",
   "scripts": {
-    "test": "lab -ct 100 -L -n jslint"
+    "test": "lab -ct 100 -L -n jslint",
+    "lint": "jslint --terse --edition latest *.js **/*.js"
   },
   "bin": {
     "nassty": "./bin/nassty.js"
@@ -25,9 +26,15 @@
   "homepage": "https://github.com/smikes/nassty",
   "devDependencies": {
     "code": "^1.2.1",
-    "lab": "^5.1.1"
+    "lab": "^5.1.1",
+    "node-sass": "^2.0.1"
   },
   "dependencies": {
-    "source-map": "^0.4.1"
+    "readable-stream": "^1.1.13",
+    "source-map": "^0.4.1",
+    "through": "^2.3.6"
+  },
+  "engines": {
+    "node": ">= 1.4.2"
   }
 }
