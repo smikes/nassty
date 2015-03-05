@@ -41,7 +41,7 @@ describe('lexer', function () {
         l.end();
     });
 
-    it('identifies whitespace', function (done) {
+    it('identifies non-whitespace', function (done) {
         var l = lexer(),
             expected = [ {data: ' ', type: lexer.S},
                          {data: 'a'},
@@ -49,14 +49,39 @@ describe('lexer', function () {
             i = 0;
 
         l.on('data', function (c) {
-            expect(c).to.deep.equal(expected[i]);
+            expect(c.data).to.deep.equal(expected[i].data);
+            expect(c.type).to.deep.equal(expected[i].type);
             i += 1;
         });
         l.on('end', function () {
+            expect(i).to.equal(3);
             done();
         });
 
         l.write(" a ");
+        l.end();
+    });
+
+    it('tracks location', function (done) {
+        var l = lexer(),
+            expected = [ {data: 'a', line: 0, column: 0},
+                         {data: '\n', line: 0, column: 1},
+                         {data: 'a', line: 1, column: 0} ],
+            i = 0;
+
+
+        l.on('data', function (c) {
+            expect(c.data).to.deep.equal(expected[i].data);
+            expect(c.line).to.deep.equal(expected[i].line);
+            expect(c.column).to.deep.equal(expected[i].column);
+            i += 1;
+        });
+        l.on('end', function () {
+            expect(i).to.equal(3);
+            done();
+        });
+
+        l.write("a\na");
         l.end();
     });
 
