@@ -1,7 +1,7 @@
 'use strict';
 
 var nassty = require('..');
-var nodeSass = require('node-sass');
+//var nodeSass = require('node-sass');
 
 var Code = require('code');
 var Lab = require('lab');
