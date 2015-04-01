@@ -19,8 +19,8 @@ function expectEqualToken(a, b) {
     if (b.type) {
         expect(a.type).to.equal(b.type);
     }
-    expect(a.data.length).to.equal(b.data.length);
     expect(a.data).to.equal(b.data);
+    expect(a.data.length).to.equal(b.data.length);
 }
 
 function expectEqualTokens(l1, l2) {
@@ -122,6 +122,9 @@ describe('lexer', function () {
                       {data: '\f\r', line: 0, column: 1, type: lexer.S},
                       {data: 'a', line: 2, column: 0}]],
 
+                    ['initial newline', ["\n\n"],
+                     [{data: '\n\n', line: 0, column: 0, token: lexer.S}]],
+
                     ['lexes identifier "f"', ["f"],
                      [{data: 'f', type: lexer.IDENT}]],
 
@@ -137,7 +140,13 @@ describe('lexer', function () {
                      [{data: '/*******\r\n*****  /** comment */', type: lexer.COMMENT_ML},
                       {data: '\f'},
                       {data: 'a', line: 2, column: 0}]],
-                    
+
+                    ['lexes CSS comment (4)', ["/", "*\r\n", " comment ", "*/\n", "a"],
+                     [{data: '/*\r\n comment */', type: lexer.COMMENT_ML},
+                      {data: '\n'},
+                      {data: 'a', line: 2, column: 0}]],
+
+
                     ['lexes single-line (SASS) comment', ["//"],
                      [{data: '//', type: lexer.COMMENT_SL}]],
 
@@ -146,8 +155,11 @@ describe('lexer', function () {
 
                     ['lexes single-line (SASS) comment (3)', ["// com", "ment", "\f", "a"],
                      [{data: '// comment\f', type: lexer.COMMENT_SL},
-                      {data: 'a', type: lexer.IDENT}]]
-                    
+                      {data: 'a', type: lexer.IDENT}]],
+
+                    ['lexes slash', ['/ '],
+                     [{data: '/', type: lexer.SLASH},
+                      {data: ' ', type: lexer.S}]]
 
 //                    ['lexes identifier "foo"', ["f", "oo"],
 //                     [{data: 'foo', type: lexer.IDENT}]]
