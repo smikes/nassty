@@ -20,7 +20,16 @@ describe('nassty', function () {
         });
 
         it('returns some data', function (done) {
-            nassty.render({ data: '' }, function (err, result) {
+            nassty.render(undefined, function (err, result) {
+                expect(err).to.equal(null);
+                expect(result.css).to.equal('');
+                expect(result.map).to.deep.equal({});
+                done();
+            });
+        });
+
+        it('returns some data', function (done) {
+            nassty.render({data: ''}, function (err, result) {
                 expect(err).to.equal(null);
                 expect(result.css).to.equal('');
                 expect(result.map).to.deep.equal({});
