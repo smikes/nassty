@@ -2,3 +2,4 @@ node_modules
 coverage
 sass-spec
 .sass-cache
+coverage.html
