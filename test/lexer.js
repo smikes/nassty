@@ -29,8 +29,14 @@ function expectEqualTokens(l1, l2) {
     });
 }
 
+function logger() {
+    var args = [].slice.call(arguments);
+    process.stderr.write(args.join(""));
+}
+
 function expectLex(chunks, expected, done) {
     var l = lexer(),
+//    var l = lexer({logger: LOG}),
         found = [];
 
     l.on('data', function (c) {
@@ -63,8 +69,21 @@ describe('lexer', function () {
         l.end();
     });
 
+    it('can log', function (done) {
+        var called = false,
+            l = lexer({logger: function () { called = true; }});
+
+        l.on('end', function () {
+            expect(called).to.equal(true);
+            done();
+        });
+
+        l.write("\t\r\n");
+        l.end();
+    });
+
     it('identifies whitespace', function (done) {
-        var l = lexer();
+        var l = lexer({});
 
         l.on('data', function (c) {
             expect(c.type).to.equal(lexer.S);
