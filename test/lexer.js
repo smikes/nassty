@@ -178,7 +178,48 @@ describe('lexer', function () {
 
                     ['lexes slash', ['/ '],
                      [{data: '/', type: lexer.SLASH},
-                      {data: ' ', type: lexer.S}]]
+                      {data: ' ', type: lexer.S}]],
+
+                    ['lexes singlequoted string', ["'foo'"],
+                     [{data: "'foo'", type: lexer.STRING_SQ}]],
+
+                    ['lexes singlequoted string w/ escape', ["'f\\\\o\\'o'"],
+                     [{data: "'f\\\\o\\'o'", type: lexer.STRING_SQ}]],
+
+                    ['error: unterminated sq string', ["'foo\n"],
+                     [{data: "'foo\n", type: lexer.UNTERMINATED_SQ}]],
+
+                    ['error: unterminated sq string', ["'foo\r\n"],
+                     [{data: "'foo\r", type: lexer.UNTERMINATED_SQ},
+                      {data: "\n", type: lexer.S}]],
+
+                    ['error: unterminated sq string', ["'foo\f"],
+                     [{data: "'foo\f", type: lexer.UNTERMINATED_SQ}]],
+
+                    ['lexes singlequoted string w/ escape (2)', ["'f\\", "a", "b o'"],
+                     [{data: "'f\\ab o'", type: lexer.STRING_SQ}]],
+
+                    ['lexes doublequoted string', ['"foo"'],
+                     [{data: '"foo"', type: lexer.STRING_DQ}]],
+
+                    ['lexes doublequoted string w/ escape', ['"f\\\\o\\"o"'],
+                     [{data: '"f\\\\o\\"o"', type: lexer.STRING_DQ}]],
+
+                    ['error: unterminated sq string', ['"foo\n'],
+                     [{data: '"foo\n', type: lexer.UNTERMINATED_DQ}]],
+
+                    ['error: unterminated sq string', ['"foo\r\n'],
+                     [{data: '"foo\r', type: lexer.UNTERMINATED_DQ},
+                      {data: "\n", type: lexer.S}]],
+
+                    ['error: unterminated sq string', ['"foo\f'],
+                     [{data: '"foo\f', type: lexer.UNTERMINATED_DQ}]],
+
+                    ['lexes doublequoted string w/ escape (2)', ['"f\\', "a", 'b o"'],
+                     [{data: '"f\\ab o"', type: lexer.STRING_DQ}]]
+
+
+
 
 //                    ['lexes identifier "foo"', ["f", "oo"],
 //                     [{data: 'foo', type: lexer.IDENT}]]
