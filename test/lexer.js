@@ -36,7 +36,7 @@ function logger() {
 
 function expectLex(chunks, expected, done) {
     var l = lexer(),
-//    var l = lexer({logger: LOG}),
+//    var l = lexer({logger: logger}),
         found = [];
 
     l.on('data', function (c) {
@@ -216,9 +216,12 @@ describe('lexer', function () {
                      [{data: '"foo\f', type: lexer.UNTERMINATED_DQ}]],
 
                     ['lexes doublequoted string w/ escape (2)', ['"f\\', "a", 'b o"'],
-                     [{data: '"f\\ab o"', type: lexer.STRING_DQ}]]
+                     [{data: '"f\\ab o"', type: lexer.STRING_DQ}]],
 
-
+                    ['lexes sq string followed by dq',
+                     ["'foo'\"don't\""],
+                     [{data: "'foo'", type: lexer.STRING_SQ},
+                      {data: '"don\'t"', type: lexer.string_DQ}]]
 
 
 //                    ['lexes identifier "foo"', ["f", "oo"],
